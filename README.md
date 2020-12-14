@@ -55,7 +55,7 @@ parser.add_argument('--batch_size', type=int, default=8,
 
 Colab을 이용해서 Fine-tuning Code를 실행할 수 있습니다.  
 
-![](img/colab_main_img.JPG)
+![](img/train phase.PNG)
 
 #### Runtime Disconnection Prevention
 ``` javascript
