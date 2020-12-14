@@ -10,7 +10,7 @@
 
 <del>또한 Colab에서는 원활한 학습을 위해서 Google Drive와 [Dropbbox](https://www.dropbox.com/h)을 연동했습니다. 학습한 중간 결과를 Google Drive에서 Dropbbox로 이동시킨 후, Google Drive에서 해당 결과를 삭제하게 합니다. 이와 관련된 [Code](https://github.com/gyunggyung/KoGPT2-FineTuning/blob/master/jupyter_main.py)</del>
 
-SKT-AI에서 약 20GB의 한국어 데이터를 Pre-Training 시킨 [KoGPT2](https://github.com/SKT-AI/KoGPT2)를 사용했습니다. 다음문장 예측 시스템을 구축하기 위해 첫 번째로 그룹웨어의 대화내용 등을 Data별로 weight를 다르게 주며 Fine-tuning 하였습니다. 또한 결과물도 확인할 수 있습니다.
+다음문장 예측 시스템을 구축하기 위해 첫번째로 그룹웨어의 대화내용 등을 Data별로 weight를 다르게 주며 Fine-tuning 하였습니다.
 
 Dropbox 연동을 제거했습니다.
 
