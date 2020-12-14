@@ -9,6 +9,7 @@
 SKT-AI에서 약 20GB의 한국어 데이터를 Pre-Training 시킨 [KoGPT2](https://github.com/SKT-AI/KoGPT2)를 사용했습니다. 첫 번째로 가사 작사를 위해서, 저작권이 만료된 정제된 가사 데이터, 소설, 기사 등을 Data별로 weight를 다르게 주며 Fine-tuning 하였습니다. 또한 장르도 받아서 음악 장르별 가사 학습 결과를 볼 수 있습니다.
 
 <del>또한 Colab에서는 원활한 학습을 위해서 Google Drive와 [Dropbbox](https://www.dropbox.com/h)을 연동했습니다. 학습한 중간 결과를 Google Drive에서 Dropbbox로 이동시킨 후, Google Drive에서 해당 결과를 삭제하게 합니다. 이와 관련된 [Code](https://github.com/gyunggyung/KoGPT2-FineTuning/blob/master/jupyter_main.py)</del>
+
 Dropbox 연동을 제거했습니다.
 
 음악 장르별로, CSV 형식의 Dataset을 받는 바뀐 Version 2의 Code로 KoGPT2-FineTuning 작업을 하기 어렵다면, [Version 1.1](https://github.com/forus-ai/KoGPT2-FineTuning)을 이용하길 바랍니다.
