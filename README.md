@@ -10,13 +10,13 @@
 
 <del>또한 Colab에서는 원활한 학습을 위해서 Google Drive와 [Dropbbox](https://www.dropbox.com/h)을 연동했습니다. 학습한 중간 결과를 Google Drive에서 Dropbbox로 이동시킨 후, Google Drive에서 해당 결과를 삭제하게 합니다. 이와 관련된 [Code](https://github.com/gyunggyung/KoGPT2-FineTuning/blob/master/jupyter_main.py)</del>
 
+<del>음악 장르별로, CSV 형식의 Dataset을 받는 바뀐 Version 2의 Code로 KoGPT2-FineTuning 작업을 하기 어렵다면, [Version 1.1](https://github.com/forus-ai/KoGPT2-FineTuning)을 이용하길 바랍니다.</del>
+
+<del>아래에서, 다양한 한국어 가사를 학습한 결과를 확인 할 수 있습니다. 우리는 이외에도 다양한 프로젝트를 진행할 것입니다. </del>
+
 다음문장 예측 시스템을 구축하기 위해 첫번째로 그룹웨어의 대화내용 등을 Data별로 weight를 다르게 주며 Fine-tuning 하였습니다.
 
 Dropbox 연동을 제거했습니다.
-
-음악 장르별로, CSV 형식의 Dataset을 받는 바뀐 Version 2의 Code로 KoGPT2-FineTuning 작업을 하기 어렵다면, [Version 1.1](https://github.com/forus-ai/KoGPT2-FineTuning)을 이용하길 바랍니다.
-
-아래에서, 다양한 한국어 가사를 학습한 결과를 확인 할 수 있습니다. 우리는 이외에도 다양한 프로젝트를 진행할 것입니다. 
 
 ## Sample
 ![](img/outputs.JPG)  
