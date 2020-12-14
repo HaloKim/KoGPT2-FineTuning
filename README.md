@@ -55,7 +55,7 @@ parser.add_argument('--batch_size', type=int, default=8,
 
 Colab을 이용해서 Fine-tuning Code를 실행할 수 있습니다.  
 
-![](img/outputs.JPG)
+![](img/train_phase.PNG)
 
 #### Runtime Disconnection Prevention
 ``` javascript
@@ -121,7 +121,7 @@ parser.add_argument('--load_path', type=str, default="./checkpoint/Alls/KoGPT2_c
 
 Colab을 이용해서 generator를 실행할 수 있습니다.  
 
-![](img/colab_generator.JPG)
+![](img/train_generator.png)
 
 ## tensorboard
 학습에 따른 변화를 확인하기 위해서, [tensorboard](http://localhost:6006/)로 접근하여 loss와 text를 확인합니다.
