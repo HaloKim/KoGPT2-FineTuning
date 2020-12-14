@@ -83,7 +83,7 @@ def main(temperature = 0.7, top_p = 0.8, top_k = 40, tmp_sent = "", text_size = 
 	else:
 		load_path = load_path.split("/")[-2]
 
-	print("ok : ", load_path)
+	print("weight load - ", load_path)
 
 	while 1:
 		sent =''
@@ -102,7 +102,7 @@ def main(temperature = 0.7, top_p = 0.8, top_k = 40, tmp_sent = "", text_size = 
 		sent = sent.replace("//", "\n") # 비효율적이지만 엔터를 위해서 등장
 		sent = sent.replace("</s>", "") 
 		sent = auto_enter(sent)
-		print(sent)
+		print(sent) # output
 
 		now = [int(n) for n in os.listdir(samples + load_path)]
 		
@@ -111,14 +111,14 @@ def main(temperature = 0.7, top_p = 0.8, top_k = 40, tmp_sent = "", text_size = 
 		except:
 			now = 1
 
-		f = open(samples + load_path + "/" + str(now + 1), 'w', encoding="utf-8")
+		# f = open(samples + load_path + "/" + str(now + 1), 'w', encoding="utf-8")
 		
-		head = [load_path, tmp_sent, text_size, temperature, top_p, top_k]
-		head = [str(h) for h in head]
-		f.write(",".join(head))
-		f.write(",")
-		f.write(sent)
-		f.close()
+		# head = [load_path, tmp_sent, text_size, temperature, top_p, top_k]
+		# head = [str(h) for h in head]
+		# f.write(",".join(head))
+		# f.write(",")
+		# f.write(sent)
+		# f.close()
 
 		#tmp_sent = ""
 

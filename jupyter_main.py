@@ -13,7 +13,6 @@ from tensorboardX import SummaryWriter
 import re
 import copy
 import logging
-import dropbox.files
 import os
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
@@ -21,21 +20,6 @@ from google.colab import auth
 from oauth2client.client import GoogleCredentials
 import os
 import sys
-
-#드롭 박스를 이용하기 위해서 쓰는 코드 드롭박스 2T를 쓰기 위해서 선언
-auth.authenticate_user()
-gauth = GoogleAuth()
-gauth.credentials = GoogleCredentials.get_application_default()
-my_drive = GoogleDrive(gauth)
-
-# 각자의 드롭박스 key 입력
-FORUS_AI_RESOURCES_APP_ACCESS_TOKEN =  ''
-
-logging.basicConfig(format='%(asctime)s,%(msecs)d %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
-                    datefmt='%Y-%m-%d:%H:%M:%S',
-                    level=logging.WARNING)
-logger = logging.getLogger(__name__)
-dbx = dropbox.Dropbox(FORUS_AI_RESOURCES_APP_ACCESS_TOKEN)
 
 def auto_enter(text):
 	text = text.replace("   ", "\n")
@@ -231,76 +215,12 @@ def main(epoch = 200, save_path = './checkpoint/', load_path = './checkpoint/KoG
 						'optimizer_state_dict': optimizer.state_dict(),
 						'loss': loss
 					}, save_path + data_file_path.split("/")[-1][:-4] + '/' + 'KoGPT2_checkpoint_' + str(count) + '.tar')
-
-					#print("문제 시작")
-
-					# 드롭박스에 저장
-					large_file = open(save_path + data_file_path.split("/")[-1][:-4] + '/' + 'KoGPT2_checkpoint_' + str(count) + '.tar', 'rb')
-
-					names = 'KoGPT2_checkpoint_' + str(count) + '.tar'
-
-					# 장르/체크포인트 부분으로 저장
-					large_file_path = '/' + data_file_path.split("/")[-1][:-4] + '/' + names
-
-					#print("문제 시작2")
-
-					CHUNK_SIZE = 1024 * 1024 * 150 
-
-					chunk = large_file.read(CHUNK_SIZE)
-					session_info = dbx.files_upload_session_start(chunk)
-					cursor = dropbox.files.UploadSessionCursor(
-					    session_id=session_info.session_id,
-					    offset=large_file.tell(),
-					)
-
-					print("문제 시작3")
-					# 남은 청크들 업로드용 loop
-					while True:
-					    chunk = large_file.read(CHUNK_SIZE)
-
-					    if not chunk:
-					        dbx.files_upload_session_finish(
-					            b'',
-					            dropbox.files.UploadSessionCursor(
-					                session_id=session_info.session_id,
-					                offset=large_file.tell(),
-					            ),
-					            dropbox.files.CommitInfo(
-					                large_file_path,
-					                dropbox.files.WriteMode('add'),
-					            ),
-					        )
-					        break
-					    else:
-					        # 청크 분할 후 남은 데이터 appending
-					        dbx.files_upload_session_append_v2(chunk, cursor)
-					        cursor.offset = large_file.tell()
-					logger.warning('학습한 모델 파일 업로드 완료')
-
-					#print("문제 시작4")
-
-					# 액세스 토큰 폴더 내 존재하는 폴더/파일 출력
-					logger.warning('대용량 파일 업로드 후 폴더/파일 목록:')
-					for entry in dbx.files_list_folder('').entries:
-					    logger.warning("\t" + entry.name)
-
-					# 파일 삭제
-					#print("문제 시작5")
-					os.remove(save_path + data_file_path.split("/")[-1][:-4] + '/' + 'KoGPT2_checkpoint_' + str(count) + '.tar')
-
-					# 휴지통 비우기
-					#print("문제 시작6")
-					logging.getLogger('googleapiclient.discovery').setLevel(logging.CRITICAL)
-
-					for a_file in my_drive.ListFile({'q': "trashed = true"}).GetList():
-						a_file.Delete()
-
 				except:
 					pass
 
 			if avg_loss[0] / avg_loss[1] < 1.0:
-				print("학습이 끝났어용!!")
-				print("모델을 저장합니다.")
+				print("학습완료")
+				print("모델저장")
 				# 모델 저장
 				#try:
 				torch.save({
@@ -310,69 +230,6 @@ def main(epoch = 200, save_path = './checkpoint/', load_path = './checkpoint/KoG
 					'optimizer_state_dict': optimizer.state_dict(),
 					'loss': loss
 				}, save_path + data_file_path.split("/")[-1][:-4] + '/' + 'KoGPT2_checkpoint_' + str(count) + '.tar')
-
-				#print("문제 시작")
-
-				# 드롭박스에 저장
-				large_file = open(save_path + data_file_path.split("/")[-1][:-4] + '/' + 'KoGPT2_checkpoint_' + str(count) + '.tar', 'rb')
-
-				names = 'KoGPT2_checkpoint_' + str(count) + '.tar'
-
-				# 장르/체크포인트 부분으로 저장
-				large_file_path = '/' + data_file_path.split("/")[-1][:-4] + '/' + names
-
-				#print("문제 시작2")
-
-				CHUNK_SIZE = 1024 * 1024 * 150 
-
-				chunk = large_file.read(CHUNK_SIZE)
-				session_info = dbx.files_upload_session_start(chunk)
-				cursor = dropbox.files.UploadSessionCursor(
-				    session_id=session_info.session_id,
-				    offset=large_file.tell(),
-				)
-
-				print("문제 시작3")
-				# 남은 청크들 업로드용 loop
-				while True:
-				    chunk = large_file.read(CHUNK_SIZE)
-
-				    if not chunk:
-				        dbx.files_upload_session_finish(
-				            b'',
-				            dropbox.files.UploadSessionCursor(
-				                session_id=session_info.session_id,
-				                offset=large_file.tell(),
-				            ),
-				            dropbox.files.CommitInfo(
-				                large_file_path,
-				                dropbox.files.WriteMode('add'),
-				            ),
-				        )
-				        break
-				    else:
-				        # 청크 분할 후 남은 데이터 appending
-				        dbx.files_upload_session_append_v2(chunk, cursor)
-				        cursor.offset = large_file.tell()
-				logger.warning('학습한 모델 파일 업로드 완료')
-
-				#print("문제 시작4")
-
-				# 액세스 토큰 폴더 내 존재하는 폴더/파일 출력
-				logger.warning('대용량 파일 업로드 후 폴더/파일 목록:')
-				for entry in dbx.files_list_folder('').entries:
-				    logger.warning("\t" + entry.name)
-
-				# 파일 삭제
-				#print("문제 시작5")
-				os.remove(save_path + data_file_path.split("/")[-1][:-4] + '/' + 'KoGPT2_checkpoint_' + str(count) + '.tar')
-
-				# 휴지통 비우기
-				#print("문제 시작6")
-				logging.getLogger('googleapiclient.discovery').setLevel(logging.CRITICAL)
-
-				for a_file in my_drive.ListFile({'q': "trashed = true"}).GetList():
-					a_file.Delete()
 
 				return
 
