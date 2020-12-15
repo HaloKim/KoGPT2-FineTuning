@@ -19,7 +19,7 @@
 Dropbox 연동을 제거했습니다.
 
 ## Sample
-![](img/outputs.JPG)  
+![](img/result.jpg)  
 
 ## Data structure
 |weight|type|data|
